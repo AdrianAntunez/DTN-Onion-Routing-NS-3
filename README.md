@@ -1,2 +1,2 @@
 # dtn-onion-routing
-Define a method to perform onion routing over a bus network using ns-3.
+This project aims to define a method to perform onion routing over a well-known network, such as in public transports, using NS-3.
