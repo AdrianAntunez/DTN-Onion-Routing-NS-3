@@ -4,7 +4,7 @@ import sys, getopt
 from math import sqrt, pow
 
 # CONSTANTS
-T_FACTOR = 0.03048   # Transform factor (feet to meters)
+T_FACTOR = 0.3048   # Transform factor (feet to meters)
 # END CONSTANTS
 
 # GLOBAL VARIABLES
