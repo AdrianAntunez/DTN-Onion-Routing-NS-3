@@ -30,6 +30,10 @@
 #include "ns3/wifi-helper.h"
 #include "ns3/wifi-phy-standard.h"
 #include "ns3/yans-wifi-helper.h"
+#include "ns3/mobility-model.h"
+#include "ns3/waypoint-mobility-model.h"
+
+#include "ns3/applications-module.h"
 
 NS_LOG_COMPONENT_DEFINE("BusTopology");
 
@@ -86,15 +90,14 @@ private:
 	Ns2MobilityHelper ns2;
 	NetDeviceContainer devices;
 	Ipv4InterfaceContainer interfaces;
-	//		Ptr<NeighborDiscoveryHelper> daemon;
 };
 
 BusTopology::BusTopology() :
 	numNodes(1181),			// Nodes
-	maxRange(300),			// Meters
-	interval(10),			// Seconds
-	endSimulation(24),		// Hours
-	progressInterval(30),	// Seconds
+	maxRange(100),			// Meters
+	interval(5),			// Seconds
+	endSimulation(1),		// Hours
+	progressInterval(300),	// Seconds
 	traceFile("data/mobility_traces/tue-11-27-traces.ns_movements"),
 	ns2(traceFile)
 {
@@ -105,14 +108,14 @@ BusTopology::~BusTopology() {}
 void
 BusTopology::Configure(int argc, char **argv)
 {
-//	LogComponentEnable("NeighborDiscoveryHelper", LOG_LEVEL_ALL);
-//	LogComponentEnable("MobilityScheduler", LOG_LEVEL_ALL);
+	LogComponentEnable("NeighborDiscoveryHelper", LOG_LEVEL_ALL);
 
 	CommandLine cmd;
 	cmd.AddValue("maxRange", "Wifi range of each node", maxRange);
 	cmd.AddValue("numNodes", "Number of nodes", numNodes);
 	cmd.AddValue("interval", "Interval of sth", interval);
 	cmd.AddValue ("traceFile", "Ns2 movement trace file", traceFile);
+	cmd.AddValue ("endSimulation", "End simulation time", endSimulation);
 	cmd.Parse(argc, argv);
 
 }
@@ -127,7 +130,7 @@ BusTopology::Run()
 
 	double totalTime = endSimulation * 3600;	// Seconds
 
-	std::cout << "Starting simulation for " << totalTime << "s ..." << std::endl;
+	std::cout << "Starting simulation for " <<  totalTime << "s ..." << std::endl;
 
 	SimulationUtils simProgress(progressInterval);
 	simProgress.Start(totalTime);
@@ -206,7 +209,7 @@ BusTopology::InstallInternetStack()
 
 	// Assign IP Addresses
 	Ipv4AddressHelper addresses;
-	addresses.SetBase ("10.1.0.0", "255.255.0.0");
+	addresses.SetBase ("10.0.0.0", "255.255.0.0");
 	interfaces = addresses.Assign (devices);
 }
 
@@ -216,17 +219,18 @@ BusTopology::InstallApplications()
 	std::cout << "Installing applications at each node" << std::endl;
 	uint16_t port = 4000;
 	Time interPacketInterval = Seconds (interval);
-	Time nodeExpiration = Seconds(interval*5);
+	Time nodeExpiration = Seconds(interval*2);
 
-	//	NeighborTopologyMapperHelper mapper(interPacketInterval, port, nodeExpiration);
+	NeighborDiscoveryHelper mapper(interPacketInterval, port, nodeExpiration);
 
 	// Applications will start when the Aircraft is flying above the ocean
-//	for(int i = 0; i < (int) nodes.GetN(); i++)
-//	{
-		//		ApplicationContainer apps = mapper.Install(nodes.Get(i));
-		//		apps.Start(Seconds (0));
-		//		apps.Stop(Seconds (endSimulation));
-//	}
+	for(int i = 0; i < (int) nodes.GetN(); ++i)
+	{
+		double at = ns2.getNodeIdFirstTime(i);
+		ApplicationContainer apps = mapper.Install(nodes.Get(i));
+		apps.Start(Seconds (at));
+		apps.Stop(Hours (endSimulation));
+	}
 }
 
 
