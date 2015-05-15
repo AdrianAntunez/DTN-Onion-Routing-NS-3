@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Fri 15 May 2015 13:09:06 CEST by SUMO gui Version 0.22.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumo-gui.exeConfiguration.xsd">
+
+    <input>
+        <net-file value="/home/adrian/Dropbox/Deic/SeNDA/LXC-NS3-aDTN/mobility/uab-purged/uab-purged.net.xml"/>
+        <additional-files value="/home/adrian/Dropbox/Deic/SeNDA/LXC-NS3-aDTN/mobility/uab-purged/input_additional.add.xml"/>
+    </input>
+
+    <output>
+        <vehroute-output value="/home/adrian/Dropbox/Deic/SeNDA/LXC-NS3-aDTN/mobility/uab-purged/vehroutes.xml"/>
+        <save-state.prefix value="/home/adrian/Dropbox/Deic/SeNDA/LXC-NS3-aDTN/mobility/uab-purged/state"/>
+    </output>
+
+    <report>
+        <xml-validation value="never"/>
+        <no-duration-log value="true"/>
+        <no-step-log value="true"/>
+    </report>
+
+    <emissions>
+        <phemlight-path value="/home/adrian/Dropbox/Deic/SeNDA/LXC-NS3-aDTN/mobility/uab-purged/./PHEMlight/"/>
+    </emissions>
+
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+</routes>
