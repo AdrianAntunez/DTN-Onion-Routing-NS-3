@@ -1,0 +1,8 @@
+The structure of the exported graphs is as follows:
+
+nodeId neighborId contactTime duration
+
+nodeId: 	identifier of the source node.
+neighborId: 	identifier of the neighbor that has contacted with nodeId.
+contactTime:	The time in seconds when te contact occurred.
+duration:	The time in seconds of the duration of the contact between nodeId and neighborId.
