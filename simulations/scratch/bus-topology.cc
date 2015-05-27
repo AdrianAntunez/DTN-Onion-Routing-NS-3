@@ -35,6 +35,8 @@
 
 #include "ns3/applications-module.h"
 
+#include "ns3/graph-helper.h"
+
 NS_LOG_COMPONENT_DEFINE("BusTopology");
 
 using namespace ns3;
@@ -77,6 +79,7 @@ private:
 	uint32_t numNodes;
 	double maxRange;
 	double interval;
+	double expiration;
 	double endSimulation;
 	double progressInterval;
 	std::string traceFile;
@@ -85,6 +88,8 @@ private:
 	void CreateDevices();
 	void InstallInternetStack();
 	void InstallApplications();
+	void InitializeGraph();
+	void ExportGraph();
 
 	NodeContainer nodes;
 	Ns2MobilityHelper ns2;
@@ -93,12 +98,13 @@ private:
 };
 
 BusTopology::BusTopology() :
-	numNodes(1181),			// Nodes
+	numNodes(5),			// Nodes
 	maxRange(100),			// Meters
-	interval(5),			// Seconds
-	endSimulation(1),		// Hours
-	progressInterval(300),	// Seconds
-	traceFile("data/mobility_traces/tue-11-27-traces.ns_movements"),
+	interval(1),			// Seconds
+	expiration(2),			// Seconds
+	endSimulation(15),		// Hours
+	progressInterval(3600),	// Seconds
+	traceFile("data/mobility_traces/uab-busses.ns_movements"),
 	ns2(traceFile)
 {
 }
@@ -111,11 +117,12 @@ BusTopology::Configure(int argc, char **argv)
 	LogComponentEnable("NeighborDiscoveryHelper", LOG_LEVEL_ALL);
 
 	CommandLine cmd;
-	cmd.AddValue("maxRange", "Wifi range of each node", maxRange);
+	cmd.AddValue("maxRange", "Wifi range of each node (m)", maxRange);
 	cmd.AddValue("numNodes", "Number of nodes", numNodes);
-	cmd.AddValue("interval", "Interval of sth", interval);
+	cmd.AddValue("interval", "Interval of beaconing (s)", interval);
+	cmd.AddValue("expiration", "Interval to consider contact lost (s)", expiration);
 	cmd.AddValue ("traceFile", "Ns2 movement trace file", traceFile);
-	cmd.AddValue ("endSimulation", "End simulation time", endSimulation);
+	cmd.AddValue ("endSimulation", "End simulation time (h)", endSimulation);
 	cmd.Parse(argc, argv);
 
 }
@@ -128,6 +135,8 @@ BusTopology::Run()
 	InstallInternetStack();
 	InstallApplications();
 
+	InitializeGraph();
+
 	double totalTime = endSimulation * 3600;	// Seconds
 
 	std::cout << "Starting simulation for " <<  totalTime << "s ..." << std::endl;
@@ -139,6 +148,7 @@ BusTopology::Run()
 	Simulator::Run();
 
 	std::cout << "Simulation Done!" << std::endl;
+	ExportGraph();
 
 	Simulator::Destroy();
 }
@@ -219,18 +229,33 @@ BusTopology::InstallApplications()
 	std::cout << "Installing applications at each node" << std::endl;
 	uint16_t port = 4000;
 	Time interPacketInterval = Seconds (interval);
-	Time nodeExpiration = Seconds(interval*2);
+	Time nodeExpiration = Seconds(expiration);
 
-	NeighborDiscoveryHelper mapper(interPacketInterval, port, nodeExpiration);
+	NeighborDiscoveryHelper ndh(interPacketInterval, port, nodeExpiration);
 
 	// Applications will start when the Aircraft is flying above the ocean
 	for(int i = 0; i < (int) nodes.GetN(); ++i)
 	{
 		double at = ns2.getNodeIdFirstTime(i);
-		ApplicationContainer apps = mapper.Install(nodes.Get(i));
+		ApplicationContainer apps = ndh.Install(nodes.Get(i));
 		apps.Start(Seconds (at));
 		apps.Stop(Hours (endSimulation));
 	}
+}
+
+void
+BusTopology::InitializeGraph()
+{
+	GraphHelper* gh = GraphHelper::Get();
+	gh->setEndSimulationTime(endSimulation * 3600);
+	gh->setNumNodes(numNodes);
+}
+
+void
+BusTopology::ExportGraph()
+{
+	GraphHelper* gh = GraphHelper::Get();
+	gh->exportToFile();
 }
 
 
