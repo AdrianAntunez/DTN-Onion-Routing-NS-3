@@ -57,6 +57,7 @@ NeighborState::NeighborState() :
     m_expirationTimer(Timer::CANCEL_ON_DESTROY),
     m_state(true),
     m_activationTimes(0),
+	m_notifyLost(MakeNullCallback<void, uint32_t, Time> ()),
     m_confidenceInterval( Seconds (0))
 
 {
@@ -81,7 +82,10 @@ void NeighborState::DoActivate()
 void NeighborState::DoDeActivate()
 {
   NS_LOG_FUNCTION(this);
-
+  if (!m_notifyLost.IsNull())
+  {
+	  m_notifyLost(m_nodeId, m_activationTime);
+  }
   m_state = false;
 }
 
@@ -120,6 +124,11 @@ NeighborState::IsActive() const
 {
   NS_LOG_FUNCTION(this);
   return m_state;
+}
+
+void NeighborState::SetNotificationCallback(Callback<void, uint32_t, Time> cb)
+{
+	m_notifyLost = cb;
 }
 
 } // namespace ns3

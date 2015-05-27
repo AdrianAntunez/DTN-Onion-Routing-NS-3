@@ -58,15 +58,12 @@ public:
 
   bool operator < (NeighborState const &o) const;
 
-  void SetReportCallback( Callback<void, NeighborReportCode, double, double >);
+  void SetNotificationCallback( Callback<void, uint32_t, Time > cb);
 
   uint32_t getNodeId() {return m_nodeId;}
 
 
 private:
-
- // void ReportContactTime();
- // void ReportInterContactTime();
 
   uint32_t m_nodeId;
   Time m_activationTime;
@@ -76,8 +73,9 @@ private:
   bool m_state;
 
   uint32_t m_activationTimes;
-
   Time m_confidenceInterval; // Confidence interval to decide whether a connection has been lost or not.
+
+  Callback<void, uint32_t, Time> m_notifyLost;
 
 };
 

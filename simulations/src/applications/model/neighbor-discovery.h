@@ -66,7 +66,8 @@ private:
 
 	void HandleRead (Ptr<Socket> socket);
 	void Send (void);
-	void ReportContact(nodeid nid, nodeid neighbor);
+	void ReportNewContact(nodeid nid, nodeid neighbor);
+	void ReportLostContact(nodeid neighborId, Time activationTime);
 
 	/* Socket stuff */
 

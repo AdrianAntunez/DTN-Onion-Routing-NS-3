@@ -33,10 +33,12 @@
 #include "ns3/simulator.h"
 #include "ns3/config.h"
 #include "ns3/random-variable-stream.h"
+#include "ns3/graph-helper.h"
 
 #include <iostream>
 #include <math.h>
 #include <map>
+
 
 namespace ns3 {
 
@@ -191,30 +193,41 @@ NeighborDiscovery::HandleRead(Ptr<Socket> socket)
 				else
 				{
 					neighbor->DoActivate();
-					ReportContact(GetNode ()->GetId (), it->first);
+					ReportNewContact(GetNode ()->GetId (), it->first);
 				}
 			}
-
 			else     // Not found
 			{
 				neighbor = CreateObject<NeighborState>();
 				neighbor->SetAttribute("ConfidenceInterval",
 						TimeValue(m_expirationTime));
 				neighbor->SetAttribute("NodeId", UintegerValue(id));
+				neighbor->SetNotificationCallback( MakeCallback(&NeighborDiscovery::ReportLostContact, this) );
 
 				std::pair<nodeid, Ptr<NeighborState> > entry(id, neighbor);
 				Neighbours.insert(Neighbours.begin(), entry);
-
-				ReportContact(GetNode ()->GetId (), id);
+				ReportNewContact(GetNode ()->GetId (), id);
 			}
 		}
 	}
 }
 
+/**
+ * New contact has been occurred.
+ */
 void
-NeighborDiscovery::ReportContact(nodeid hostId, nodeid neighId)
+NeighborDiscovery::ReportNewContact(nodeid hostId, nodeid neighId)
 {
-	std::cout << "Contact from node: " << hostId << " to node: " << neighId << " in: " << Simulator::Now ().GetSeconds () << "s." << std::endl;
+//	std::cout << "Contact from node: " << hostId << " to node: " << neighId << " in: " << Simulator::Now ().GetSeconds () << "s has occurred." << std::endl;
 }
 
+/**
+ * Existing contact has been lost.
+ */
+void
+NeighborDiscovery::ReportLostContact(nodeid neighborId, Time activationTime)
+{
+	double duration = floor(Simulator::Now ().GetSeconds () - activationTime.GetSeconds() - 1);
+	GraphHelper::Get()->addContact(GetNode()->GetId(), neighborId, ceil(activationTime.GetSeconds()), duration);
+}
 } // Namespace ns3
