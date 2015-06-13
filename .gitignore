@@ -63,3 +63,7 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
+
+
+# Custom
+paper/build/*
