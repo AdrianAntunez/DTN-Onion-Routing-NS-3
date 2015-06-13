@@ -1,3 +1,34 @@
 \section{Evaluation}\label{sec:evaluation}
+%\red{Aim of this section: •.}
 
-\red{Evaluation goes here}.
+\red{Aim of this section: Brief introduction of what are we going to talk about in this section.}
+
+In this section the security of our proposal is evaluated using a realistic scenario providing information about the devices and other parameters used in the evaluation.
+
+\subsection{Scenario: Campus buses}
+
+\red{Aim of this section: Explain a bit how the campus scenario works and how can be this useful in practice.}
+
+In order to test our proposal we considered a very little public transportation network that works inside the Autnonomous University of Barcelona (UAB) composed by 5 buses that makes different routes around the UAB campus.
+
+Each bus has a DTN node achieving secret communications as well as source anonymity using this network. There are several applications that can take profit of such networks like anonymous reporting systems.
+
+\subsection{Mobility Model}
+
+\red{Aim of this section: explain how we get this scenario: open street maps -> sumo -> ns-3... }
+
+We obtained the mobility model going along different stages. First, we exported the UAB Campus map from OpenStreetMaps into SUMO \red{\cite{sumo}} software, filtering some unnecessary items with the Java OpenStreetMap editor \red{\cite{josm}} tool.
+
+% bus-schedule: http://www.uab.cat/doc/horaris_busUAB_2015
+Once the campus roads was imported in SUMO, we recreated the bus movements of each bus taking into consideration the official bus schedule of the UAB public transportation network \red{\cite{bus-schedule}}. In addition, we tuned some bus characteristics like acceleration and deceleration parameters in order to get coherent travel times.
+
+%sumo-to-ns2: http://www.ijarcsse.com/docs/papers/Volume_4/4_April2014/V4I4-0416.pdf
+Finally, we exported the model to a the NS-2 mobility trace as is explained in \red{\cite{sumo-to-ns2}}. The NS-2 mobility trace can be used with the well-known Network Simulator NS-3. We used the simulator to obtain important contact related data of the campus network, i.e: information about the duration of the contacts as well as the instant of time when they occurred.
+
+\subsection{Simulation setup}
+
+\red{Aim of this section: Explain and define the values used in the simulation itself as well as how we know that there is a neighbour able to contact with.}
+
+\subsection{Simulation results}
+
+\red{Aim of this section: Explain the results of this simulation. What we get and explaining why.}
