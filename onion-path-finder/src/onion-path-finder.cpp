@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 		std::cout << "Usage: " << argv[0] << " <source> <destination> <time> <numPaths> <numNodes> <transmissionTime>" << std::endl;
 		return 1;
 	}
-	nodes = Parser::getContactsFromTxt("../data/uab-busses-contacts-54000h-5n-sorted.txt");
+	nodes = Parser::getContactsFromTxt("data/paper-example.txt");
 	OracleNetwork on = OracleNetwork(nodes);
 
 	nodeid source = atoi(argv[1]);			// Source node

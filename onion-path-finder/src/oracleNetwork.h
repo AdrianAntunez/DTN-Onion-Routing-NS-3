@@ -23,6 +23,7 @@ public:
 	PathVector getPaths(nodeid source, nodeid destination, uint32_t time, int numPaths, int numNodes, uint32_t transmissionTime);
 	NeighborsVector getAvailableNeighbors (Contacts contacts, uint32_t currentTime);
 	void printPaths (PathVector pv);
+	void printPath (Path path);
 	bool equalPathOfNodesInPathVector (PathVector pv, Path p);
 	bool pathEqualNodes (Path p1, Path p2);
 
