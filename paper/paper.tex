@@ -3,11 +3,28 @@
 \usepackage[american]{babel}
 \usepackage[utf8]{inputenc}
 
-\usepackage{graphicx}
+\usepackage{svg}
+\usepackage{amsmath}
 
 %extended enumerate, such as \begin{compactenum}
 \usepackage{paralist}
 \usepackage{color}
+\usepackage{graphicx}
+
+\usepackage{caption}
+\usepackage{subfig}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\renewcommand{\algorithmicforall}{\textbf{for each}}
+\algnewcommand\algorithmicinherit{\textbf{INHERIT:}}
+\algnewcommand\INHERIT{\item[\algorithmicinherit]}
+\algnewcommand\algorithmicinput{\textbf{INPUT:}}
+\algnewcommand\INPUT{\item[\algorithmicinput]}
+\algnewcommand\algorithmicoutput{\textbf{OUTPUT:}}
+\algnewcommand\OUTPUT{\item[\algorithmicoutput]}
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
 \newcommand{\red}[1]{\textcolor{red}{#1}}
 
 %put figures inside a text
@@ -148,9 +165,9 @@ Insitute 2\\
 
 \input{inc/conclusions}
 
-\subsubsection*{Acknowledgments}
+\subsubsection*{Acknowledgements}
 
-\red{Acknowledgments go here}.
+\red{Acknowledgements go here}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
