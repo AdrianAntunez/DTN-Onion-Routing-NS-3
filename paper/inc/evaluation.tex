@@ -4,7 +4,7 @@
 %\red{Aim of this section: Brief introduction of what are we going to talk about in this section.}
 
 % ns-3: https://www.nsnam.org/
-In this section the security of our proposal is evaluated using a realistic scenario. We decided to recreate the small public transport network of the UAB campus using the Network Simulator 3 (NS-3). NS-3 is a well-known discrete-event simulator targeted primarily for the research usage~\cite{ns-3-webpage}. We explain as well how the mobility model was obtained as well as what parameters were used during the simulation. Finally we will test our proposed method in the simulation to evaluate how it performs.
+In this section we conduct simulation based on realistic scenario trace file to verify the feasibility of our proposal. We decided to recreate the small public transport network of the UAB campus using the Network Simulator 3 (NS-3). NS-3 is a well-known discrete-event simulator targeted primarily for the research usage~\cite{ns-3-webpage}. We explain as well how the mobility model was obtained as well as what parameters were used during the simulation. Finally we will test our proposed method in the simulation to evaluate how it performs.
 
 \subsection{Scenario: Campus buses}
 
@@ -56,7 +56,7 @@ As can be seen in table~\ref{table:simulation-parameters}, we also tuned differe
 
 %\red{Aim of this section: Explain the results of this simulation. What we get explaining why.}
 
-In figure~\ref{fig:contact-duration-group} we have an overall view of the network activity. There is a group that have really short communications, these communications can be suitable for those applications that does not require a huge amount of data to send. There is another group that has long communications (nearly 7 minutes), these group is able to perform complex communications sending higher amount of data. The average contact time is near 1 minute indeed is suitable for several applications like anonymous reporting systems. A summary of contacts related information during the simulation is shown in table~\ref{table:contact-information}.
+In figure~\ref{fig:contact-duration-group} we have an overall view of the network activity. There is a group that have really short contact times, these contacts can be suitable for those applications that does not require a huge amount of data to send. There is another group that has long contact times (nearly 7 minutes), these group is able to perform complex communications sending higher amount of data. The average contact time is near 1 minute indeed is suitable for several applications like anonymous reporting systems. A summary of contacts related information during the simulation is shown in table~\ref{table:contact-information}. With this simple network characterization we show that our evaluation model can be used for several applications. 
 
 \begin{table}[h]
 \centering

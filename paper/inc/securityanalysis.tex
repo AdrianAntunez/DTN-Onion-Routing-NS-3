@@ -2,16 +2,28 @@
 
 %\red{Aim of this section: •.}
 
-\red{Aim of this section: Brief introduction of what are we going to talk about in this section.}
+In this section, we evaluate our proposed scheme from the aspect of security. First, we define the threat model, defining important considerations regarding the scenario under study. After, we define different kinds of adversaries explaining what they can do and what we do to preserve the sender anonymity as well as the privacy of exchanged information.
 
 \subsection{Threat model}
 
-\red{Aim of this section: Define against who we try to defend our data. What the attacker may or may not do. Define some considerations such as sufficient strong cryptographic algorithms with sufficiently long keys to prevent practical cryptanalysis attacks.}
+Alice (\textit{A}) wants to communicate to Bob (\textit{B}) without revealing information about her. Using onion routing we intend to improve A's anonymity as well as data privacy against adversaries that can be passive,i.e: eavesdropping messages or take an active paper in this scenario, i.e: make modifications or attack to other nodes of the network. In general, security threats can be divided into passive and active threats. We consider that nodes in our scenario use strong cryptographic algorithms with enough key lengths to prevent practical cryptanalysis attacks to discover the source, the destination or the contents of a message. 
 
 \subsection{Passive adversaries}
 
-\red{Aim of this section: Needs to be defined. I am not even sure if this kind of adversaries will be in our proposed model.}
+Passive attacks are those that perform guessing simply observing user traffic patterns from "passive" nodes. 
+
+As is explained in \cite{latency-leak} if the attacker is the destination of the message, he can learn something from the delay between messages.  This kind of attacks does not work when sending start time, known as \textit{t} parameter in our path choosing method, is not highly predictable \cite{enpassant}.
+
+Another attacker model is a set of compromised nodes that works together to retrieve information leading to break the users privacy. We have two different situations to deal with: the multiple decryption and the sending node periodicity. First, the attacker will be able to decrypt more layers, or messages if one of the nodes is the destination, because they have their corresponding private keys. Second, there are scenarios where a node or a set of them rarely transmit information to others, discarding this nodes from the probable sending set, a globally passive adversary can correctly guess the source of a message. To overcome such attacks the \textit{n} value can be increased, i.e: the number of nodes that has a single path to send the message. As much nodes, much layers a message will have. There is a trade-off between efficiency and security deciding \textit{n} value. To solve the guessing issue the creation of dummy packets when ingress throughput drops below a certain threshold \cite{arden} may help to prevent such attacks.
+
+Is important to note that an attacker can combine previously explained attacks to increase their chance of guessing.
+
+To decrease the probability of guess the path, different paths are retrieved using our path choosing method and one of them is chosen randomly.
 
 \subsection{Active adversaries}
 
-\red{Aim of this section: Needs to be defined. I am not even sure if this kind of adversaries will be in our proposed model.}
+Active adversaries are those that performs actions against other nodes or modifies information that cross through them. As is the case of passive nodes, an attacker controlling a single node will be unable to extract the source of a message because of the use of multiple layers of encryption \cite{arden}. There are several possible attacks to do against onion routing by malign node in the network \cite{congestion-attack}, \cite{location-attack}, \cite{latency-leak}.
+
+An attacker who has a control of a node of the network can attacking non-observed nodes to shut them down. Prohibiting the communication between the source and the destination if that node was implied in involved in the chosen path. This kind of attacks are called Denial of Service DoS attacks and can be addressed improving the robustness of the nodes as well as with reputation systems as in discussed in conclusions and future work section \ref{sec:conclusions}.
+
+Message modifications by attackers are easily detected using cryptographic hash methods. Other attacks like masquerading (nodes pretending to be different nodes) are solved as layers of encryption check the node identity. The key management process is safely done in a prior stage.

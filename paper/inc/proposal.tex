@@ -11,17 +11,13 @@ In this section, we review some relevant concepts like predictable DTNs, onion r
 We define as predictable DTNs at such networks where the behaviour is known in advance or where a repetitive action occurs over the time.
 
 % dtn-book: 
-These networks fits perfectly with the concept of oracle schemes. Oracle schemes are a subset of DTN routing protocols. In this schemes there is a set of nodes that has nearly full knowledge of the network and its planned evolution \cite{dtn-book}. Oracle schemes are used in deterministic scenarios where the oracle node will have full details of occurred contacts as well as the future ones, among other things. 
+These networks fits perfectly with the concept of oracle schemes. Oracle schemes are a subset of DTN routing protocols. In this schemes there is a set of nodes that has nearly full knowledge of the network and its planned evolution \cite{dtn-book}. Contacts oracle is an oracle that can answer any question regarding contacts between two nodes at any point in time \cite{oracle-types}. Contacts oracle schemes are used in deterministic scenarios where the oracle node will have full details of occurred contacts as well as the future ones, among other things.
 
 For instance, we could consider public transport networks as predictable (deterministic) networks because every node performs the same route periodically so this route can be known in advance. This information could be shared among all nodes in the network in order to let them be "oracle", i.e: let them have a full knowledge of the behaviour of the whole network. Is important to note that despite these networks are nearly deterministic, an error needs to be assumed for exceptional situations.
 
 As we explained previously, all network information will be known even by active adversaries, therefore a security analysis needs to be carried out. This analysis is discussed in section \ref{sec:sanalysis}.
 
-\subsection{Onion routing overview}
-
-%\red{Aim of this section: As onion routing is quite important in this research, explain briefly how it works.}
-
-First, we provide a high-level description of how onion routing works as is the essence of this proposal. The source node, wishing to send an anonymous message to another node, chooses a path and ciphers the message several times making "layers". Each layer of encryption uses a different pre-shared key between the source and a node on the path. When the message reaches a node, the layer is removed with the private key of the node and the packet gets modified. At the end of the process the destination will receive the fully decrypted message without knowing who sent it.
+As onion routing understanding is essential to our proposal, we provide a high-level description of how onion routing works as is the essence of this proposal. The source node, wishing to send an anonymous message to another node, chooses a path and ciphers the message several times making "layers". Each layer of encryption uses a different pre-shared key between the source and a node on the path. When the message reaches a node, the layer is removed with the private key of the node and the packet gets modified. At the end of the process the destination will receive the fully decrypted message without knowing who sent it.
 
 \begin{figure}[hbt]
   \centering
@@ -38,7 +34,7 @@ In order to use onion routing a prior key exchange process needs to be performed
 
 % \red{Aim of this section: Explain how we stored the contact information of the network. Explain that we used a dynamic graph, defining what a graph is and what means to mean a dynamic one.} \\
 
-Is it clear that we need to use a structure to represent the network activity. One method that seems to work is to use a graph structure as a way to represent network activity \red{\cite{a} \cite{b} \cite{c}}. Where each node of the network is represented as graph vertices and each contact between nodes as graph edges. 
+Is it clear that we need to use a structure to represent the network activity. One method that seems to work is to use a graph structure as a way to represent network activity \cite{probabilistic-dtn}, \cite{deterministic-dtn}, \cite{contact-graph}. Where each node of the network is represented as graph vertices and each contact between nodes as graph edges. 
 
 A graph $G = (V, E)$ consists of two sets $V$ and $E$ \cite{gross2013handbook}. The elements of V are called \textit{vertices} or \textit{nodes} while the elements of E are called \textit{edges}. Each edge is composed by two vertices. Edges and vertices can have \textit{attributes}. An attribute is a value associated either to edges and vertices that permits to store information.
 
@@ -78,11 +74,11 @@ In figure \ref{fig:dynamic-graph-example} the evolution of a given graph represe
 
 Imagine we have a source node \textit{s} willing to send a message to a destination \textit{d} at time \textit{t} using onion routing. In onion routing you need to choose the number of nodes  \textit{n} where the message will pass through. Node \textit{s} obtains a path to perform the layering process and send the message. The time required to exchange the message between nodes is defined as \textit{tt}. 
 
-To make even harder the path guessing for thirds, as the network knowledge is shared among all nodes, the node \textit{s} obtains a set of paths \textit{k} in order to choose one randomly. To sum up, we need a method \textit{f(s, d, t, n, k, tt)} that will retrieve a set of paths to finally choose one following the \textit{t}, \textit{n}, \textit{k} and \textit{tt} requirements. 
+To make even harder the path guessing from thirds, as the network knowledge is shared among all nodes, the node \textit{s} obtains a set of paths \textit{k} in order to choose one of them randomly. To sum up, we need a method \textit{f(s, d, t, n, k, tt)} that will retrieve a set of paths to finally choose one following the \textit{t}, \textit{n}, \textit{k} and \textit{tt} requirements. 
 
-The procedures shown in Algorithm~\ref{alg:get-neighbors} and Algorithm~\ref{alg:get-paths} are an example of deterministic choosing for onion routing. Both of them inherit values to filter out unneeded paths. Specifically, in Algorithm~\ref{alg:get-neighbors} we return from a given node \textit{host} at time \textit{currentTime} a set of neighbors  that are available or will be available to forward the message. In Algorithm~\ref{alg:get-paths} we performed a recursive search to get up to \textit{k} paths of length \textit{n} from \textit{source} to \textit{destination}.
+The procedures shown in Algorithm~\ref{alg:get-neighbors} and Algorithm~\ref{alg:get-paths} are an example of deterministic choosing for onion routing. Both of them inherit values to filter out unneeded paths. Specifically, in Algorithm~\ref{alg:get-neighbors} from a given node \textit{host} at time \textit{currentTime} we return a set of neighbors  that are available or will be available to forward the message. In Algorithm~\ref{alg:get-paths} we perform a recursive search to get up to \textit{k} paths of length \textit{n} from \textit{source} to \textit{destination}.
 
-In figure~\ref{fig:dynamic-graph-example} we showed an example of contact data representation using dynamic graphs. Applying our path choosing method with: source node \textit{s=1}, destination node \textit{d=5}, starting time \textit{t=0}, number of paths \textit{k=4}, number of nodes of each path of \textit{n=5} and transmission time  \textit{tt=1}, we get the following paths: \\
+In figure~\ref{fig:dynamic-graph-example} there is an example of contact data representation using dynamic graphs. Applying our path choosing method with the following parameters: source node \textit{s=1}, destination node \textit{d=5}, starting time \textit{t=0}, number of paths \textit{k=4}, number of nodes of each path \textit{n=5} and transmission time \textit{tt=1}, we get the following paths: \\
 
 \noindent\fbox{%
     \parbox{\textwidth}{%
@@ -97,9 +93,9 @@ In figure~\ref{fig:dynamic-graph-example} we showed an example of contact data r
 		
 		(n: t): Means message sent to node n at time t.
     }%
-}
+}\\
 
-So we got 4 different paths composed by 5 nodes each (3 layers will be done). From the given set of paths, the source node \textit{s} will need to choose one in order to perform the onion routing itself.
+So we get 4 different paths composed by 5 nodes each, i.e: 3 layers will be done. From the given set of paths, the source node \textit{s} will need to choose one in order to perform the onion routing itself. To make the guessing of the source node difficult, the path to send the message will be chosen randomly from the given set.
 
 \begin{algorithm}
 \caption{Procedure to get valid neighbors of a given node}
