@@ -33,7 +33,7 @@ Finally, we converted the model to a NS-2 mobility trace as is explained in \cit
 % ns-3-dtn: https://www.nsnam.org/wiki/Current_Development
 The DTN modules are under current development in NS-3 \cite{ns-3-dtn}. For this reason we decided to implement a neighbour discovery in the application layer. This application broadcasts beacon messages periodically looking for new contact opportunities. The interval time is the time to wait between beacons while the expiration time is the time a neighbour is considered valid, these parameters can be set up manually.
 
-\begin{table}[h]
+\begin{table}[h!]
 \centering
 \begin{tabular}{l|l}
 Parameter & Value \\
@@ -55,15 +55,21 @@ In table~\ref{table:simulation-parameters} we show different parameters for the 
 \subsection{Simulation results}
 
 %\red{Aim of this section: Explain the results of this simulation. What we get explaining why.}
+In this section we show some data related to the simulations. We provide a
+general overview of the network and measures related to the contact behavior.
+We also analyze our proposal over the real scenario of the UAB campus.
 
-In figure~\ref{fig:contact-duration-group} we have an overall view of the network activity. There is a group that has really short contact times, these contacts can be suitable for those applications that do not require a huge amount of data to be sent. There is another group that has long contact times (nearly 7 minutes), this group is able to perform complex communications sending higher amount of data. The average contact time is near 1 minute, suitable for several applications like anonymous sensing systems. A summary of contacts related information during the simulation is shown in table~\ref{table:contact-information}. With this simple network analysis we show that our evaluation model can be used for several applications. 
-
-\begin{figure}[hbt]
+\begin{figure}[h!bt]
   \centering
   \includegraphics[scale=0.70]{imgs/statistics/contacts-duration}
   \caption{Number of contacts with the same duration.}
   \label{fig:contact-duration-group}
 \end{figure}
+
+In figure~\ref{fig:contact-duration-group} we have an overall view of the
+network activity. 
+There is a group that has really short contact times, these contacts can be suitable for those applications that do not require a huge amount of data to be sent. There is another group that has long contact times (nearly 7 minutes), this group is able to perform complex communications sending higher amount of data. The average contact time is near 1 minute, suitable for several applications like anonymous sensing systems. A summary of contacts related information during the simulation is shown in table~\ref{table:contact-information}. With this simple network analysis we show that our evaluation model can be used for several applications. 
+
 
 \begin{table}[h]
 \centering
@@ -96,3 +102,10 @@ In figure~\ref{fig:ktime-data} after fixing \textit{s=1; d=5; t=0} and \textit{n
   \caption{Average delivery time considering varying number of paths.}
   \label{fig:ktime-data}
 \end{figure}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../paper"
+%%% End:
+
+%  LocalWords:  UAB
