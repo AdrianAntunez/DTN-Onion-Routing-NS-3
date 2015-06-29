@@ -121,12 +121,12 @@ pdfpagelayout=SinglePage
 %\titlerunning{Short Title}
 
 %Single insitute
-\author{Adrian Antunez-Veas \and Guillermo Navarro-Arribas}
+\author{Adrian Antunez-Veas}
 %If there are too many authors, use \authorrunning
 %\authorrunning{First Author et al.}
 \institute{Department of Information and Communications Engineering, \\
 				Universitat Autònoma de Barcelona (UAB), 08193 Cerdanyola, Spain\\
-				\email{\{aantunez, gnavarro\}@deic.uab.cat}}
+				\email{aantunez@deic.uab.cat}}
 
 %Multiple insitutes
 %Currently disabled
@@ -148,14 +148,14 @@ Insitute 2\\
 \maketitle
 
 \begin{abstract}
-With the growth of Internet of Things (IoT) the data as well as the anonymity preservation has become a challenging research topic. Using Delay Tolerant Network (DTN) with onion routing an alternative secure network that hides the source identity can be achieved. We consider as predictable DTN at such networks where the behaviour is known in advance or where a repetitive action occurs over the time like in public transport networks. This project shows how the prior stage of path choosing in the onion routing can be achieved using the information provided by predictable networks while the security of our proposed method is analysed.
+With the growth of Internet of Things (IoT) the privacy and security has become a challenging research topic. Using Delay Tolerant Networks (DTNs) along with onion routing a secure and anonymous independent network can be achieved. Predictable DTNs are networks where the behaviour is known in advance or where a repetitive action occurs over the time like in public transport networks. This project shows how the prior stage of path selection in onion routing can be achieved using the information provided by predictable networks. We also analyse the security of our proposed method.
 \end{abstract}
 
 \keywords{Onion Routing, Delay-tolerant Network, Anonymous networking, Privacy, Security}
 
 \input{inc/introduction}
 
-\input{inc/relatedwork}
+\input{inc/rconcepts}
 
 \input{inc/proposal}
 
@@ -167,14 +167,16 @@ With the growth of Internet of Things (IoT) the data as well as the anonymity pr
 
 \subsubsection*{Acknowledgements}
 
-\red{Acknowledgements go here}.
+The author would like to thank Guillermo Navarro Arribas for his excellent advice in this research work.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\clearpage
+
 \bibliography{paper}
 
-All links were last followed on \today.
+All links were last accessed on \today.
 
-\bibliographystyle{ieeetr}
+\bibliographystyle{splncs03}
 
 \end{document}
