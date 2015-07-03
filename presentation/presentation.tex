@@ -121,7 +121,7 @@
 \begin{frame}
 \frametitle{DTNs overview}
 \begin{block}{Definition}
-Delay and disruption tolerant networks (DTNs).
+Delay and disruption tolerant networks.
 \end{block}
 \bigskip 
 Based on the \alert{\emph{store-carry-and-forward}} principle.\\
@@ -142,13 +142,13 @@ Source \textit{S} wants to send an anonymous message to \textit{C} (destination)
 \bigskip
 \begin{block}{Onion routing phases}
 \begin{enumerate}
-\item \textit{S} chooses a path $p=(S),C,B,A$ from source to destination.
-\item \textit{S} encrypts the message with the public key of \textit{C}, \textit{B} and \textit{A}.
+\item \textit{S} chooses a path $p=(S),A,B,C$ from source to destination.
+\item \textit{S} encrypts the message with the pre-shared key of \textit{C}, \textit{B} and \textit{A}.
 \item \textit{S} sends the message.
 \end{enumerate}
 \end{block}
 \bigskip
-\centering \includegraphics[width=.7\linewidth]{../paper/imgs/onion}
+\centering \includegraphics[width=.5\linewidth]{../paper/imgs/onion}
 %Each intermediate node, decrypts the message with his private key revealing the next encryption layer. At the end, the destination gets the fully decrypted message.
 %Comment that the key management process will be done in a early step.
 \end{frame}
@@ -179,10 +179,10 @@ Achieve anonymous communications over an independent network.
 \bigskip
 \begin{block}{Onion routing along with predictable DTNs}
 \begin{itemize}
-\item Find a way to represent the contacts of the network.
-\item Find a method to perform the previous path selection step.
-\item Analyse the security of our proposal.
-\item Show how this method performs in a real scenario.
+\item Find a way to \alert{represent the contacts} of the network.
+\item Find a method to perform the previous \alert{path selection} step.
+\item \alert{Security analysis} of our proposal.
+\item Show how this method performs in a \alert{real scenario}.
 \end{itemize}
 \end{block}
 \end{frame}
@@ -301,13 +301,16 @@ A dynamic graph $G = (V,E)$ as a way of contact representation.
 In onion routing a path to perform the layering process is needed.
 \end{block}
 \bigskip
-\begin{block}{}
-
-\end{block}
-\bigskip
 \begin{block}{The method}
-A deterministic method \textit{f(s, d, t, n, k, tt)} is defined that returns up to \textit{k} paths. \\
-Each path is composed by \textit{n} nodes, from the source \textit{s} to the destination \textit{d}.
+A deterministic method \textit{f(s, d, t, n, k, tt)} is defined.
+\begin{itemize}
+\item \textit{s}: Source node.
+\item \textit{d}: Destination node.
+\item \textit{t}: Time when the message is sent.
+\item \textit{n}: Number of nodes in each path.
+\item \textit{k}: Maximum number of paths to be returned.
+\item \textit{tt}: Transmission time.
+\end{itemize}
 \end{block}
 \end{frame} %By this way we solve the challenging routing problem in DTNs.
 
@@ -315,23 +318,32 @@ Each path is composed by \textit{n} nodes, from the source \textit{s} to the des
 \subsection{Security Analysis}
 \begin{frame}
 \frametitle{Security Analysis}
-Alice wants to communicate to Bob anonymously.
-\bigskip
-\begin{block}{Passive adversaries}
-Just observing user traffic patterns from nodes.
+\begin{block}{Goal}
+Reveal who sent the message (uncover the source).
+\end{block}
+\begin{block}{Attack types}
+Can be divided in two groups:
+\begin{itemize}
+\item Active: Actions against nodes or message modifications.
+\item Passive: Just observing user traffic patterns from nodes.
+\end{itemize}
 \end{block}
 \bigskip
-\begin{block}{Active adversaries}
-Actions against nodes and/or message modifications.
+\begin{block}{Active attacks}
+\begin{itemize}
+\item Denial of Service (DoS) attacks to neighbour nodes.
+\item Message modifications.
+\item Masquerading (nodes pretending to be others).
+\end{itemize}
 \end{block}
 \end{frame}
 
 \subsection{Passive adversaries}
 \begin{frame}
-\frametitle{Passive adversaries}
-\begin{block}{Possible attacks}
+\frametitle{Passive attacks}
+\begin{block}{Passive attacks}
 \begin{itemize}
-\item Learn from the content and the delay between messages.
+\item Learn from the content of the message.
 \item Sending node periodicity analysis.
 \item Set of compromised nodes working together.
 \end{itemize}
@@ -339,8 +351,8 @@ Actions against nodes and/or message modifications.
 %{\setbeamercolor{block body}{bg=white}
 \begin{block}{Example}
 \begin{itemize}
-\item Node 1 sent a message to node 4.
-\item Node 1 sent a timestamp.
+\item Node 1 sent an anonymous message to node 4.
+\item Node 1 message's contains a timestamp.
 \item Nodes 2 and 4 have been compromised.
 \item Node 5 never has sent or has forwarded a message yet.
 \end{itemize}
@@ -349,20 +361,7 @@ Actions against nodes and/or message modifications.
 %}
 \end{frame}
 
-\subsection{Active adversaries}
-\begin{frame}
-\frametitle{Active adversaries}
-\begin{block}{Possible attacks}
-\begin{itemize}
-\item Congestion, location based and latency analysis attacks.
-\item Denial of Service (DoS) attacks to neighbour nodes.
-\item Message modifications.
-\item Masquerading (nodes pretending to be others).
-\end{itemize}
-\end{block}
-\end{frame}
-
-\section{Avaluation}
+\section{Evaluation}
 \subsection{NS-3 simulation scenario}
 \begin{frame}
 \frametitle{NS-3 simulation scenario}
@@ -374,7 +373,7 @@ NS-3 is a discrete-event simulator targeted primarily for research.
 \begin{itemize}
 \item Implemented neighbour discovery on the application layer.
 \item The app polls every second to find new contact opportunities.
-\item the If contact is missing for 2 seconds, contact has been lost.
+\item If contact is missing for 2 seconds, contact has been lost.
 \end{itemize}
 \end{block}
 \bigskip
@@ -409,7 +408,7 @@ NS-3 is a discrete-event simulator targeted primarily for research.
 \frametitle{Simulation results (II)}
 \begin{figure}
 \centering \includegraphics[width=.7\linewidth]{../paper/imgs/statistics/ntime-data}
-\caption{Average delivery time considering the variation of the path length.}
+\caption{Average delivery time considering the variation of the path length (k=10 was fixed).}
 \end{figure}
 \end{frame}
 
@@ -418,7 +417,7 @@ NS-3 is a discrete-event simulator targeted primarily for research.
 \frametitle{Simulation results (III)}
 \begin{figure}
 \centering \includegraphics[width=.7\linewidth]{../paper/imgs/statistics/ktime-data}
-\caption{Average delivery time considering varying number of paths.}
+\caption{Average delivery time considering the variation of the number of paths (n=5 was fixed).}
 \end{figure}
 \end{frame}
 

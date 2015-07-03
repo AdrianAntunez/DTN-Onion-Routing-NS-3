@@ -15,7 +15,7 @@ As we explained previously, contact information will be known by everyone, there
 
 \subsection{Onion routing overview}
 
-We provide a high-level description of how onion routing works. The source node, wishing to send an anonymous message to another node, chooses a path ciphering the message several times making "layers". Onion routing uses asymmetric cryptographic protocols where the corresponding public key between the source and a node on the path is shared. Each layer of encryption is performed with the corresponding public key. When the message reaches a node, the layer is removed with the node's private key and the packet gets modified. At the end of the process, if every node in the path did the decryption correctly, the destination will receive the fully decrypted message without knowing who sent it.
+We provide a high-level description of how onion routing works. The source node, wishing to send an anonymous message to another node, chooses a path ciphering the message several times making "layers". Onion routing uses a pre-shared symmetric key between the source and a node on the path to make this layers. When the message reaches a node, the layer is removed with the pre-shared key. At the end of the process, if every node in the path did the decryption correctly, the destination will receive the fully decrypted message without knowing who sent it.
 
 \begin{figure}[hbt]
   \centering
@@ -24,7 +24,7 @@ We provide a high-level description of how onion routing works. The source node,
   \label{fig:dtn-example}
 \end{figure}
 
-To clear out the main idea, an example can be seen in figure \ref{fig:dtn-example}. The source node wants to send an anonymous message to a destination using a previously chosen path composed by the nodes A, B and C. The source ciphers the message with the public key of C, B and A respectively. When the message reaches every hop, each node removes the external layer using the node's private key. Finally, the destination will get the fully decrypted message.
+To clear out the main idea, an example can be seen in figure \ref{fig:dtn-example}. The source node wants to send an anonymous message to a destination using a previously chosen path composed by the nodes A, B and C. The source ciphers the message with the corresponding pre-shared symmetric key of C, B and A respectively. When the message reaches every hop, each node removes the external layer using the key. Finally, the destination will get the fully decrypted message.
 
 \subsection{Key management}
 
