@@ -41,6 +41,9 @@ NS_LOG_COMPONENT_DEFINE("BusTopology");
 
 using namespace ns3;
 
+/**
+ * Manage visual simulation times
+ */
 class SimulationUtils
 {
 public:
@@ -57,6 +60,9 @@ void SimulationUtils::Start(double totalTime)
 	Simulator::Schedule(Seconds(progInterval), &SimulationUtils::ProgressNotifier, this, totalTime, progInterval);
 }
 
+/**
+ * Shows the simulation process in a human way (by percentages)
+ */
 void SimulationUtils::ProgressNotifier(double TotalTime, double Interval)
 {
 	std::clog.precision(4);
@@ -64,6 +70,9 @@ void SimulationUtils::ProgressNotifier(double TotalTime, double Interval)
 	Simulator::Schedule(Seconds(Interval), &SimulationUtils::ProgressNotifier, this, TotalTime, Interval);
 }
 
+/**
+ * Main project class called BusTopology
+ */
 class BusTopology
 {
 public:
@@ -111,6 +120,9 @@ BusTopology::BusTopology() :
 
 BusTopology::~BusTopology() {}
 
+/**
+ * Set different parameters that can be set up manually from command args
+ */
 void
 BusTopology::Configure(int argc, char **argv)
 {
@@ -127,6 +139,9 @@ BusTopology::Configure(int argc, char **argv)
 
 }
 
+/**
+ * Run the simulation, showing the progress of it
+ */
 void
 BusTopology::Run()
 {
@@ -153,6 +168,9 @@ BusTopology::Run()
 	Simulator::Destroy();
 }
 
+/**
+ * Load the mobility trace set before into NS-3 nodes
+ */
 void
 BusTopology::CreateNodes()
 {
@@ -164,6 +182,9 @@ BusTopology::CreateNodes()
 	ns2.Install();
 }
 
+/**
+ * Set up the network: configure the physical mode, the wi-fi parameters (seting an adhoc wifi), etc.
+ */
 void
 BusTopology::CreateDevices()
 {
@@ -202,6 +223,9 @@ BusTopology::CreateDevices()
 	wifiChannel.AddPropagationLoss ("ns3::RangePropagationLossModel","MaxRange", DoubleValue (maxRange));
 }
 
+/**
+ * Set internet stack (ipv4) and its addresses
+ */
 void
 BusTopology::InstallInternetStack()
 {
@@ -223,6 +247,9 @@ BusTopology::InstallInternetStack()
 	interfaces = addresses.Assign (devices);
 }
 
+/**
+ * Install an aplication: Neighbor Discovery to know the produced contacts
+ */
 void
 BusTopology::InstallApplications()
 {
@@ -243,6 +270,9 @@ BusTopology::InstallApplications()
 	}
 }
 
+/**
+ * Initialize the dynamic graph structure
+ */
 void
 BusTopology::InitializeGraph()
 {
@@ -251,6 +281,9 @@ BusTopology::InitializeGraph()
 	gh->setNumNodes(numNodes);
 }
 
+/**
+ * Export the graph to a txt file
+ */
 void
 BusTopology::ExportGraph()
 {

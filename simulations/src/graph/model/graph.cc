@@ -5,7 +5,6 @@
  *      Author: Adrian Antunez <adriananve@gmail.com>
  */
 
-//#include "graph.h"
 #include "graph.h"
 
 namespace ns3 {

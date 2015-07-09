@@ -38,9 +38,9 @@ class NeighborState : public Object
 public:
 
 
-  /*
-   * \brief Default constructor
-   *  At creation time the neighbor is active
+  /**
+   * Default constructor
+   * At creation time the neighbor is active
    */
   NeighborState();
   ~NeighborState();

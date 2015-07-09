@@ -196,11 +196,11 @@ NeighborDiscovery::HandleRead(Ptr<Socket> socket)
 					ReportNewContact(GetNode ()->GetId (), it->first);
 				}
 			}
-			else     // Not found
+			else     // Neighbor Not found
 			{
 				neighbor = CreateObject<NeighborState>();
 				neighbor->SetAttribute("ConfidenceInterval",
-						TimeValue(m_expirationTime));
+				TimeValue(m_expirationTime));
 				neighbor->SetAttribute("NodeId", UintegerValue(id));
 				neighbor->SetNotificationCallback( MakeCallback(&NeighborDiscovery::ReportLostContact, this) );
 

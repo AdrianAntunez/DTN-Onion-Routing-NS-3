@@ -36,8 +36,8 @@ namespace ns3 {
 			int getLabel() {return m_label;}
 			Neighbors getNeighbors() {return m_neighbors;}
 		private:
-			int m_vertexId;	 //Id of the current vertex (starting at 0 to Inf. It's the id of gephi)
-			uint32_t m_label; //The label of the vertex will be the Id of the node (plane) that has been involved in a contact
+			int m_vertexId;	 //Id of the current vertex (starting at 0 to Inf)
+			uint32_t m_label; //The label of the vertex will be the Id of the node that has been involved in a contact
 			Neighbors m_neighbors;	//List of neighbours (adjacence list representation)
 };
 
