@@ -32,6 +32,7 @@ contactTime:	The time in seconds when te contact occurred.
 duration:	The time in seconds of the duration of the contact between nodeId and neighborId.
 ##Path selection##
 
+Regarding the path selection is a non-efficient algorithm that seeks paths from a dynamic graph (the output data file format). In future work this algorithm needs to be updated to achieve an efficient path retrieving method.
 
 It is important to note that the relevant parts of this project are explained deeply and can be used by the SeNDA department in [DevLab Platform Simulation](http://senda.uab.cat/wiki/DevLab_Platform_Simulation).
 
