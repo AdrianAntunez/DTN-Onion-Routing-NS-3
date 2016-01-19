@@ -1,0 +1,192 @@
+/*! \page utils_module
+    Graph Exploration Utils
+    =======================
+    This module provides multiple graph exploration tools. 
+   
+    OracleNetwork
+    -------------    
+    Implements an exploration method that returns __k__ paths of size __n__  from node __s__ to node __d__. 
+    
+    
+    The path exploration starts at time __t__ and each hop in the path requires time __tt__ to be performed.
+    
+    The OracleNetwork class constructor takes the following parameters:
+    
+    ~~~~~~~~~~~~~~~{.c}
+     OracleNetwork(Nodes nodes, 
+		   nodeid source, 
+		   nodeid destination, 
+		   uint32_t startTime, 
+		   uint32_t numPaths, 
+		   uint32_t numNodes, 
+		   uint32_t transmissionTime, 
+		   bool noCycles);
+    ~~~~~~~~~~~~~~~
+
+    - source : Corresponds to node __s__. This parameter may be specified via command-line argument using -s or --source.
+    - destination: Corresponds to node __d__ . This parameter may be specified via command-line argument using -d or --destination.
+    - startTime: Corresponds to time __t__. This parameter may be specified via command-line argument using -i or --startTime.
+    - numPaths: Corresponds to __k__. This parameters may be specified via command-line argument using -p or --numPaths.
+    - numNodes: Corrresponds to __n__. This parameter may be specified via command-line argument using -n or --numNodes.
+    - transmissionTime: Corresponds to __tt__. This parameter may be specified via command-line argument using -t or --transmissionTime.
+    
+    Basic graph exploration allows repeated nodes in returned paths. This behaviour may be overriden using setting the __noCycles__ flag to __true__
+    which can be done using the command-line -c or --disableCycles arguments.
+    
+    Basic graph exploration considers a __dynamic graph__ in which nodes become neighbors at concrete times and disapear after specified intervals.
+    
+    TimingBasedAdversary
+    --------------------
+    
+    Implements an exploration methods used by an adversary trying to guess the source of a communication using only limited message timing information.
+    
+    On its basic configuration, the adversary knows, the destination node __a__ (itself) and the total time that was required to perform the transmission __t__ (from source to destination across multiple hops), 
+    considering that each hop requires time __tt__ to be performed.
+    
+    The TimingBasedAdversary class constructor takes the following parameters:
+    
+    ~~~~~~~~~~~~~~~{.c}
+    TimingBasedAdversary(Nodes nodes, 
+			 nodeid adversary, 
+			 uint32_t numPaths, 
+			 uint32_t numNodes, 
+			 uint32_t transmissionTime, 
+			 uint32_t endToEndDelay, 
+			 bool noCycles, 
+			 bool dynamic, 
+			 bool ofSize, 
+			 bool maxTime);
+    ~~~~~~~~~~~~~~~
+    
+    - adversary: Corresponds to node __a__ This parameter may be specified via command-line argument using -s or --source.
+    - transmissionTime: Corresponds to __tt__. This parameter may be specified via command-line argument using -t or --transmissionTime.
+    - endToEndDelay: Corresponds to  __t__.  This parameter may be specified via command-line argument using -e or --endToEndTime.
+    
+    We now provide some exploration examples using the following basic graph: 
+    
+    \image html basicgraph.jpeg "Basic Graph Example" width=4cm
+    
+    Explore all paths that ended at node 2 and required 3 seconds to reach it, considering 1 second delay per hop.
+    > ./OnionPathFinder -s 2 -e 3 -t 1
+    
+    Program output: 
+    ~~~~~~~~~~~~~~~{.c}
+    Path: 0
+    (2:3), (3:2), (0:1), (1:0)
+    Path: 1
+    (2:3), (3:2), (0:1), (3:0)
+    Path: 2
+    (2:3), (3:2), (0:1), (4:0)
+    Path: 3
+    (2:3), (3:2), (1:1), (0:0)
+    Path: 4
+    (2:3), (3:2), (1:1), (3:0)
+    Path: 5
+    (2:3), (3:2), (2:1), (3:0)
+    Path: 6
+    (2:3), (3:2), (2:1), (4:0)
+    Path: 7
+    (2:3), (3:2), (4:1), (0:0)
+    Path: 8
+    (2:3), (3:2), (4:1), (3:0)
+    Path: 9
+    (2:3), (3:2), (4:1), (2:0)
+    Path: 10
+    (2:3), (4:2), (0:1), (1:0)
+    Path: 11
+    (2:3), (4:2), (0:1), (3:0)
+    Path: 12
+    (2:3), (4:2), (0:1), (4:0)
+    Path: 13
+    (2:3), (4:2), (3:1), (0:0)
+    Path: 14
+    (2:3), (4:2), (3:1), (1:0)
+    Path: 15
+    (2:3), (4:2), (3:1), (2:0)
+    Path: 16
+    (2:3), (4:2), (3:1), (4:0)
+    Path: 17
+    (2:3), (4:2), (2:1), (3:0)
+    Path: 18
+    (2:3), (4:2), (2:1), (4:0)
+    ~~~~~~~~~~~~~~~
+  
+    Parameters :
+    
+    - numPaths: Define maximum number of paths to explore and return . This parameters may be specified via command-line argument using -p or --numPaths.
+    - numNodes: Define maximum number of nodes in path . This parameter may be specified via command-line argument using -n or --numNodes.
+    
+    Exploration may be limited using them: 
+    
+    > ./OnionPathFinder -s 2 -e 3 -t 1 -p 3
+ 
+    Program output: 
+    ~~~~~~~~~~~~~~~{.c}
+    Path: 0
+    (2:3), (3:2), (0:1), (1:0)
+    Path: 1
+    (2:3), (3:2), (0:1), (3:0)
+    Path: 2
+    (2:3), (3:2), (0:1), (4:0)
+    ~~~~~~~~~~~~~~~
+    
+    Basic graph exploration allows repeated nodes in returned paths. This behaviour may be overriden using setting the __noCycles__ argument to __true__
+    which can be done using the command-line -c or --disableCycles arguments.
+    
+    > ./OnionPathFinder -s 2 -e 3 -t 1 -p 3 -c
+    
+    Program output: 
+    ~~~~~~~~~~~~~~~{.c}
+    Path: 0
+    (2:3), (3:2), (0:1), (1:0)
+    Path: 1
+    (2:3), (3:2), (0:1), (4:0)
+    Path: 2
+    (2:3), (3:2), (1:1), (0:0)
+    ~~~~~~~~~~~~~~~
+
+    By default this exploration method assumes a __static graph__ in which all connected nodes remain that way indifinitely. The graph representation supports and implements __dynamic graphs__
+    in which each node becomes a neighbor at an specific time and remains that way an specified ammount of time. 
+    
+    To consider these timing relationships during graph exploration the __dynamic__ flag must be set to __true__. This can be done using the command-line -g -or --dynamicGraph arguments.
+    
+    > ./OnionPathFinder -s 2 -e 3 -t 1 -c -g
+  
+    Program output: 
+    ~~~~~~~~~~~~~~~{.c}
+    Path: 0
+    (2:3), (3:2), (0:0)
+    Path: 1
+    (2:3), (3:2), (1:1), (0:0)
+    ~~~~~~~~~~~~~~~
+    
+    Parameter numNodes acts as a maximum value for paths, the output result may contain paths of several sizes. This behaviour may be overriden to provide paths of __length equal to numNodes__ setting the 
+    __ofSize__ flag to __true__. This can be done using the command-line -o or --ofGivenSize arguments.
+    
+    > ./OnionPathFinder -s 2 -e 3 -t 1 -c -g -n 4 -o
+    
+    Program output: 
+    ~~~~~~~~~~~~~~~{.c}
+    Path: 0
+    (2:3), (3:2), (1:1), (0:0)
+    ~~~~~~~~~~~~~~~
+
+    Parameter endToEndDelay defines the __exact time__ required by the paths. Instead, it is possible return all paths smaller requiriing less than thsi time and use this value as the __maximum__ allowed time.
+    This is done by setting the __maxTime__ flag to __true__ using the command-line -a or --allOfSmallerTime.
+    
+    > ./OnionPathFinder -s 2 -e 3 -t 1 -c -g -a
+    
+    Program output: 
+    ~~~~~~~~~~~~~~~{.c}
+    Path: 0
+    (2:3), (3:2)
+    Path: 1
+    (2:3), (3:2), (0:0)
+    Path: 2
+    (2:3), (3:2), (1:1)
+    Path: 3
+    (2:3), (3:2), (1:1), (0:0)
+    ~~~~~~~~~~~~~~~
+    
+    
+*/
