@@ -1,0 +1,15 @@
+include_directories(".")
+add_subdirectory(core)
+add_subdirectory(graph)
+add_subdirectory(parsers)
+add_subdirectory(utils)
+add_subdirectory(ui)
+aux_source_directory(. SRC_LIST)
+
+add_executable(${PROJECT_NAME} ${SRC_LIST})
+
+target_link_libraries(${PROJECT_NAME} core)
+target_link_libraries(${PROJECT_NAME} graph)
+target_link_libraries(${PROJECT_NAME} parsers)
+target_link_libraries(${PROJECT_NAME} utils)
+target_link_libraries(${PROJECT_NAME} ui)
