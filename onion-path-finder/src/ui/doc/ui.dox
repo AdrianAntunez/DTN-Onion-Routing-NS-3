@@ -1,0 +1,61 @@
+/*! \page ui_module 
+  User Interface 
+  ==============
+  The UserInterface class offers a way to parse commnad-line input arguments. 
+  
+  This implementation is based on <a href="http://www.gnu.org/software/libc/manual/html_node/Getopt.html"> getopt </a>. Specifically, it uses __getoplong__ to parse
+  program input allowing both short ( -s )  and long name arguments ( --source ).   
+  
+  Expanding the user Interface with new options
+  ---------------------------------------------
+  
+  The list of allowed arguments is defined in the __FlagTypes enumeration__ using __binary flag convention__. Additional arguments need to be included in this enum definition using a value increased by
+  __one bit left shift__. 
+  
+  ~~~~~~~~~~~~~~~{.c}
+   enum FlagTypes
+    {
+      FileFlag              = 0x01, // 0000 0001
+      SourceFlag            = 0x02, // 0000 0010
+      DestinationFlag       = 0x04, // 0000 0100
+      StartTimeFlag         = 0x08, // 0000 1000
+      NumPathsFlag          = 0x10, // ...
+      NumNodesFlag          = 0x20,
+      TransmissionTimeFlag  = 0x40,
+      EndToEndTimeFlag      = 0x80,
+      UtilFlag              = 0x100,
+      CyclesFlag            = 0x200,
+      DynamicFlag           = 0x400,
+      SizeFlag              = 0x800,
+      TimeFlag              = 0x1000
+    };
+   ~~~~~~~~~~~~~~~
+   
+   The flag types and its corresponding short argument, long argument and verbose description, are provided through the use of a __const map__ structure using FlagType as the key indexator. New arguments have to be added
+   to this mapping.
+   
+   ~~~~~~~~~~~~~~~{.c}
+   const std::map <UserInterface::FlagTypes,UserInterface::OptionInfo>  UserInterface::m_flagNames =
+   {
+    {UserInterface::FlagTypes::FileFlag, {std::string("file"),'f',std::string("Full path to graph file")}},
+    {UserInterface::FlagTypes::SourceFlag, {std::string("source"),'s', std::string("Source node for path exploration")}},
+    // ...
+   ~~~~~~~~~~~~~~~
+   
+   Values from this map are used to fill the __options__ struct being passed to the __getoplong__ function. New arguments have to be added to this structure.
+   
+   ~~~~~~~~~~~~~~~{.c}
+   option UserInterface::m_programOptions[] =
+   {
+    {"help", no_argument, 0, 'h'},
+    {"version", no_argument, 0, 'v'},
+    {m_flagNames.at(UserInterface::FlagTypes::SourceFlag).longName.c_str(),  required_argument,  0, m_flagNames.at(UserInterface::FlagTypes::SourceFlag).shortName},
+  ~~~~~~~~~~~~~~~
+  
+   Additionally a list of arguments and options have to be  provided in string format to the __getoplong__ parameters list ( "hovacgf:s:d:i:p:n:t:e:u: "). New arguments have to be added to this list.
+   
+   >  getopt_long(argc, argv, "hovacgf:s:d:i:p:n:t:e:u:", m_programOptions, &optIndex ))
+   
+   Lastly, corresponding switch-case statetements have to be added __UserInterface::getArgs()__ and __UserInterface::getOptionValue()__ member function implementations.
+  
+*/

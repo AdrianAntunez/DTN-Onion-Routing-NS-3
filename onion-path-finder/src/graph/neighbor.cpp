@@ -1,8 +1,10 @@
-/*
- * Neighbor.cpp
- *
- *  Created on: 26 May 2015
- *      Author: Adrian Antunez
+/**
+ * @copyright
+ * Copyright (C) 2015 Universitat Autònoma de Barcelona
+ * Department of Information and Communications Engineering
+ * @file neighbor.cpp
+ * @author Adrian Antunez
+ * @date Created on:  26/5/2015
  */
 
 #include "neighbor.h"
@@ -19,7 +21,8 @@ Neighbor::Neighbor(nodeid hostId, nodeid id, uint32_t activationTime, uint32_t d
 	m_id(id),
 	m_activationTime(activationTime),
 	m_duration(duration)
-{}
+{
+}
 
 std::ostream& Neighbor::operator<<(std::ostream& os)
 {

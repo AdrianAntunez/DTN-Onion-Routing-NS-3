@@ -1,0 +1,39 @@
+/*! \page parsers_module 
+  Parsers Module   
+  =====
+  \tableofcontents
+  This module provides classes capable of reading and importing graphs from multiple file formats. 
+ 
+  List of supported file formats:
+
+  BasicParser
+  -------------
+  Basic text 4 column format: 
+  
+  > <node> <neighbor> <contactTime> <contactDuration>
+  
+  Types: 
+  
+  > <integer> <integer> <integer> <integer>
+ 
+  Sample: 
+  
+  > 0 1 0 1
+  
+  > 0 3 0 3
+  
+  > 0 4 0 4
+
+  CrawdadParser
+  -------------
+  Multi type basic text 7 column format:
+  > <node> <neighbor> <contactTime> <txDataAmmount> <contactDuration> <latitude> <longitude>
+  
+  Types: 
+  > <string> <string> <h:m:s> <float> <float> <float> <float>
+  
+  Sample:
+  
+  > PVTA_3119 PVTA_3027 12:59:13 1.368164E7 28806.0 42.385952 -72.52274
+
+*/

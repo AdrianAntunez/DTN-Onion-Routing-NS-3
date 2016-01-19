@@ -1,0 +1,79 @@
+/*! \mainpage
+ *
+ * \section intro Onion Path Finder model library
+ *
+ *
+ * This is the Onion Path Finder library documentation.
+ *
+ * This documentation provides information on the classes and public APIS of the project in Doxygen form.
+ *
+ * This document is maintained via: 
+ *  - The `.dox` file found in the `doc` sub-directory of each __module__.
+ *  - The in-line Doxygen comments found in each class header source file.
+ * 
+ * \section org Project structure
+
+  This project is structured into __modules__ which may contain one or several __models__ (classes) which share  a common purpose.
+    - Each __module__ is located on its own specific subdirectory inside the `src` folder.
+    - Each __model__ API is documented, from a programming perspective, using Doxygen.
+
+ * Module  | Description | Location
+ *------------- | ------------- | -------------
+ * \ref graph_module  | This module contains the classes and data structures used to represent network graphs. | `src/graph`
+ * \ref parsers_module  | This module provides classes capable of reading and importing graphs from multiple file formats. | `src/parsers`
+ * \ref utils_module | This module provides graph exploration tools. | `src/utils`
+ * \ref ui_module | This module contains User Interface routines. | `src/ui`
+ * \ref core_module | This module contains application utility fetaures (constants, logging, etc.). | `src/core`
+ *
+ * \section rel Project specifics
+ 
+   \subsection us Program Usage
+    OntionPathFinder v.0.1
+ ~~~   
+    Usage: OntionPathFinder -[hvcgaof:s:d:i:p:n:t:] 
+    Options:
+    -f --file: Full path to graph file
+    -s --source: Source node for path exploration
+    -d --destination: Destination node of path exploration
+    -i --startTime: Starting time of path exploration
+    -p --numPaths: Maximum number of paths to return
+    -n --numNodes: Maximum length of explored paths
+    -t --transmissionTime: Time spent/required to perform one hop
+    -e --endToEndTime: Total time required to traverse path from source to destination
+    -u --explorationUtil: Choose exploration util to use (numeric code): 
+	    [0] Oracle Network 
+	    [1] TimingBasedAdversary
+    -c --disableCycles: Disable circular paths (repeated nodes in path)
+    -g --dynamicGraph: Consider dynamic graph
+    -o --ofGivenSize: Uses numNodes as path length instead of maximum length (only TimingBasedAdversary)
+    -a --allOfSmallerTime: Return all paths smaller than end-to-end time (only TimingBasedAdversary)
+~~~
+ * \subsection cm Compilation
+  The build process is managed using __Cmake__. The __src__ directory contains the source tree and project binaries are placed into the __build__ directory. 
+  
+  The build process can be controlled using the __CMakeLists.txt__ files placed in each directory of the source tree. 
+  
+  - Implementation and build manager are __cross-platform__ only needing a built-in C++ compiler.   
+  - The project uses multiple C++11 features (currently requiring GCC-4.9 or higher).
+ 
+ * \subsection hd Header license file
+    License and author information is placed on top of each source file in Doxygen documentation format.   A template for this header can be found into the the root directory as __license-template.h__.
+    
+    This file may be exported into an IDE to be automatically put as the header of each new created file.
+    It uses QtCreator placeholders and environmnet variables to set-up the specific information about each file.
+    
+    An specific environment variable FULL_NAME needs to be created for it to function properly.
+    
+    In Ubuntu systems this can be done adding a new line at the end of the ~.profile file:
+    
+  > export FULL_NAME="Full Author Name"
+    \subsection td Todo List
+    List of pending or unfinished features numbered by priorities and types:
+    
+    - Optimization.
+    - Feature pending.
+    - Implementation Pending.
+    
+    \ref todo
+
+ */ 

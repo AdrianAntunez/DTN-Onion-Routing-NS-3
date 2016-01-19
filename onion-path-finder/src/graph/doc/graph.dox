@@ -1,0 +1,21 @@
+/*! \page graph_module 
+  Graph Representation
+  =====
+  \tableofcontents
+  This module contains the classes and data structures used to represent network graphs.
+  
+  This implementation is based on:
+  
+  - The Neighbor class.
+  - The NeighborsVector typedef.
+  - The Contacts typedef.
+  - The Nodes typedef.
+ 
+  These data structures are organized in the following fashion to produce a representation of the graph: 
+  ______
+  
+  \image html graph-data-structs.jpg "Graph Representation: Data Structure Organization." 
+  
+
+
+*/
